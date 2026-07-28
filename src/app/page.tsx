@@ -3,7 +3,6 @@
 
 import { Suspense, useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-import dynamic from "next/dynamic";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { WeatherProvider } from "@/context/WeatherContext";
 import { CityProvider, useCity } from "@/context/CityContext";
@@ -21,21 +20,7 @@ import {
   trackSkyAdCtaClick,
   trackBuildingClicked,
 } from "@/lib/himetrica";
-
-// Dynamically import Canvas and Chat overlays for performance
-const CityCanvas = dynamic(() => import("@/components/CityCanvas"), {
-  ssr: false,
-  loading: () => (
-    <div className="h-screen w-screen bg-black flex items-center justify-center">
-      <div className="text-[#ffa116] font-pixel text-lg animate-pulse">
-        Loading City...
-      </div>
-    </div>
-  ),
-});
-
-const CityChat = dynamic(() => import("@/components/CityChat"), { ssr: false });
-const LoadingScreen = dynamic(() => import("@/components/LoadingScreen"), { ssr: false });
+import { CityCanvas, CityChat, LoadingScreen } from "@/lib/dynamic-imports";
 
 // HUD Modular Subcomponents
 import SearchBar from "@/components/hud/SearchBar";
